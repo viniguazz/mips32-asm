@@ -1,0 +1,32 @@
+.data
+tam:   	.word  4 #tamanho dos vetores
+A:    	.word  2, 4, 6, 8
+B:   	.word  3, 5, 7, 9
+C:      .word 0:4 # Reserva 4 words inicializadas com 0
+
+.text
+main:
+
+la   $a0, A   		# $a0 contém o endereço (aponta) de $A[0]          
+lw   $t1, tam   	# $t1 recebe o tamanho dos vetores
+la   $a1, B   		# $a1 contém o endereço (aponta) de $B[0]         
+la $a2, C               # $a2 contém o endereço (aponta) de $C[0] 
+
+
+
+# Atribui a registradores temporários os elementos de A[i] e B[i] e incrementa i (de 4 em 4)
+while:
+lw $t5,0($a0)           # Carrega em $t5 o valor de A[i]
+addiu $a0,$a0,4	 	# $a0 passa a apontar para o próximo elemento de A
+lw $t6,0($a1)           # Carrega em $t6 o valor de B[i]
+addiu $a1,$a1,4    	# $a1 passa a apontara para o próximo elemento de B
+
+add $t7,$t5,$t6		# Soma A[i] e B[i] 	
+sw $t7,0($a2)		# Armazena o resultado da soma em C[i] (apontado por $a2)
+addiu $a2,$a2,4         # $a2 passa a apontar para o próximo elemento de C
+addi $t1,$t1,-1 	# Decrementa $t1
+bne  $t1,$zero,while   # Se ainda não somou todos elementos, continua
+
+
+fim:
+li   $v0, 10      	# Pede para o SO terminar o programa
