@@ -14,4 +14,6 @@ addi $t0, $t0, 1 # increments offset
 slt $t3, $t0, $a1 # t3 = (offset < vector size)
 bne $t3, $zero, loop
 
+# this structure can be interpreted as a "for loop", because it (a) creates a var; (b) executes an operation; (c) increments the var
+
 
